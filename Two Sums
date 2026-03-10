@@ -1,0 +1,11 @@
+class Solution:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        numToIndex = {} # Dictionary to store number -> index
+        for i, num in enumerate(nums):
+            complement = target - num
+            if complement in numToIndex:
+                return [numToIndex[complement], i]
+            numToIndex[num] = i
+        return [] # According to the problem statement, a solution is guaranteed to exist, so this line is technically unreachable on LeetCode.
+
+        
