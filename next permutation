@@ -1,0 +1,27 @@
+class Solution:
+    def nextPermutation(self, nums: List[int]) -> None:
+        """
+        Do not return anything, modify nums in-place instead.
+        """
+        n = len(nums)
+        p = -1
+        
+        # 1. Find pivot (first element from right that is smaller than its successor)
+        for i in range(n - 2, -1, -1):
+            if nums[i] < nums[i + 1]:
+                p = i
+                break
+        
+        if p != -1:
+            # 2. Find the smallest element to the right of pivot that is larger than pivot
+            for j in range(n - 1, p, -1):
+                if nums[j] > nums[p]:
+                    nums[p], nums[j] = nums[j], nums[p]
+                    break
+        
+        # 3. Reverse the suffix to get the smallest lexicographical order
+        left, right = p + 1, n - 1
+        while left < right:
+            nums[left], nums[right] = nums[right], nums[left]
+            left += 1
+            right -= 1
