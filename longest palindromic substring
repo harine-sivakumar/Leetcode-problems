@@ -1,0 +1,27 @@
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        if not s:
+            return ""
+        
+        start, max_len = 0, 0
+        
+        def expand(l, r):
+            while l >= 0 and r < len(s) and s[l] == s[r]:
+                l -= 1
+                r += 1
+            # After loop, s[l+1...r-1] is the valid palindrome
+            return r - l - 1
+
+        for i in range(len(s)):
+            # Check odd length (center is i)
+            len1 = expand(i, i)
+            # Check even length (center is between i and i+1)
+            len2 = expand(i, i + 1)
+            
+            current_max = max(len1, len2)
+            if current_max > max_len:
+                max_len = current_max
+                # Calculate start index from the center i
+                start = i - (current_max - 1) // 2
+                
+        return s[start : start + max_len]
