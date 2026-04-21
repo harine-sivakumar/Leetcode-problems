@@ -1,0 +1,25 @@
+class Solution:
+    def solveSudoku(self, board: List[List[str]]) -> None:
+        def isValid(r, c, k):
+            for i in range(9):
+                # Row check
+                if board[i][c] == k: return False
+                # Column check
+                if board[r][i] == k: return False
+                # 3x3 Box check
+                if board[3*(r//3) + i//3][3*(c//3) + i%3] == k: return False
+            return True
+
+        def solve():
+            for r in range(9):
+                for c in range(9):
+                    if board[r][c] == '.':
+                        for k in '123456789':
+                            if isValid(r, c, k):
+                                board[r][c] = k
+                                if solve(): return True
+                                board[r][c] = '.' # Backtrack
+                        return False
+            return True
+
+        solve()
