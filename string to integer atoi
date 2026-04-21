@@ -1,0 +1,31 @@
+class Solution:
+    def myAtoi(self, s: str) -> int:
+        s = s.strip()  # 1. Handle leading/trailing whitespace
+        if not s:
+            return 0
+        
+        sign = 1
+        i = 0
+        # 2. Determine signedness
+        if s[0] == '-':
+            sign = -1
+            i += 1
+        elif s[0] == '+':
+            i += 1
+            
+        res = 0
+        MAX_INT = 2**31 - 1
+        MIN_INT = -2**31
+        
+        # 3. Convert digits
+        while i < len(s) and s[i].isdigit():
+            digit = int(s[i])
+            
+            # 4. Check for overflow before updating
+            if res > MAX_INT // 10 or (res == MAX_INT // 10 and digit > 7):
+                return MAX_INT if sign == 1 else MIN_INT
+                
+            res = res * 10 + digit
+            i += 1
+            
+        return sign * res
