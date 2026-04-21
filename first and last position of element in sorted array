@@ -1,0 +1,15 @@
+import bisect
+
+class Solution:
+    def searchRange(self, nums: list[int], target: int) -> list[int]:
+        # find the first index where target could be inserted
+        left = bisect.bisect_left(nums, target)
+        
+        # if left is out of bounds or doesn't match target, it's not in the array
+        if left == len(nums) or nums[left] != target:
+            return [-1, -1]
+        
+        # find the index where target + 1 would be inserted, then subtract 1
+        right = bisect.bisect_right(nums, target) - 1
+        
+        return [left, right]
