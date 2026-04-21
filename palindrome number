@@ -1,0 +1,14 @@
+class Solution:
+    def isPalindrome(self, x: int) -> bool:
+        # Step 1: Filter out negative numbers and positive numbers ending in 0
+        if x < 0 or (x % 10 == 0 and x != 0):
+            return False
+
+        rev = 0
+        # Step 2: Reverse the second half of the number
+        while x > rev:
+            rev = rev * 10 + x % 10
+            x //= 10
+
+        # Step 3: Compare both halves
+        return x == rev or x == rev // 10
