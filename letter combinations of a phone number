@@ -1,0 +1,28 @@
+class Solution:
+    def letterCombinations(self, digits: str) -> list[str]:
+        if not digits:
+            return []
+            
+        phone_map = {
+            "2": "abc", "3": "def", "4": "ghi", "5": "jkl",
+            "6": "mno", "7": "pqrs", "8": "tuv", "9": "wxyz"
+        }
+        
+        result = []
+        
+        def backtrack(index, current_string):
+            # Base Case: If the current string is the same length as digits
+            if len(current_string) == len(digits):
+                result.append("".join(current_string))
+                return
+            
+            # Get the letters corresponding to the current digit
+            letters = phone_map[digits[index]]
+            
+            for letter in letters:
+                current_string.append(letter)    # Choose
+                backtrack(index + 1, current_string) # Explore
+                current_string.pop()             # Backtrack (Un-choose)
+                
+        backtrack(0, [])
+        return result
