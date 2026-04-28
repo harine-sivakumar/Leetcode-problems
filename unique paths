@@ -1,0 +1,11 @@
+class Solution:
+    def uniquePaths(self, m: int, n: int) -> int:
+        # Initialize a 2D array with 1s (covers base cases for first row/column)
+        dp = [[1] * n for _ in range(m)]
+        
+        # Fill the rest of the grid
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
+        
+        return dp[m-1][n-1]
