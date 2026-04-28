@@ -1,0 +1,30 @@
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        res = []
+        nums.sort()  # Step 1: Sort to place duplicates together
+        used = [False] * len(nums)
+        
+        def backtrack(path):
+            if len(path) == len(nums):
+                res.append(path[:])
+                return
+            
+            for i in range(len(nums)):
+                # Skip if already used
+                if used[i]:
+                    continue
+                # Step 2: Skip duplicates
+                # If nums[i] == nums[i-1] and the previous duplicate wasn't used yet,
+                # it means picking nums[i] would result in a duplicate permutation.
+                if i > 0 and nums[i] == nums[i-1] and not used[i-1]:
+                    continue
+                
+                used[i] = True
+                path.append(nums[i])
+                backtrack(path)
+                # Backtrack: undo the choice
+                path.pop()
+                used[i] = False
+                
+        backtrack([])
+        return res
