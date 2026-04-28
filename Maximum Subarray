@@ -1,0 +1,13 @@
+class Solution:
+    def maxSubArray(self, nums: List[int]) -> int:
+        # Initialize with the first element
+        max_sum = curr_sum = nums[0]
+        
+        # Iterate through the rest of the array
+        for n in nums[1:]:
+            # If curr_sum is negative, discard it and start at n
+            curr_sum = max(n, curr_sum + n)
+            # Update the global maximum found so far
+            max_sum = max(max_sum, curr_sum)
+            
+        return max_sum
