@@ -1,0 +1,31 @@
+class Solution:
+    def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        if not head or not head.next or k == 0:
+            return head
+        
+        # 1. Find length and original tail
+        tail = head
+        length = 1
+        while tail.next:
+            tail = tail.next
+            length += 1
+        
+        # 2. Handle cases where k >= length
+        k = k % length
+        if k == 0:
+            return head
+        
+        # 3. Form a circular list
+        tail.next = head
+        
+        # 4. Move to the node just before the new head
+        steps_to_new_tail = length - k
+        new_tail = tail
+        for _ in range(steps_to_new_tail):
+            new_tail = new_tail.next
+            
+        # 5. Break the circle and return new head
+        new_head = new_tail.next
+        new_tail.next = None
+        
+        return new_head
