@@ -1,0 +1,26 @@
+class Solution:
+    def permute(self, nums: list[int]) -> list[list[int]]:
+        res = []
+        used = [False] * len(nums)
+        
+        def backtrack(current_path):
+            # Base Case: Current arrangement is a full permutation
+            if len(current_path) == len(nums):
+                res.append(current_path[:])
+                return
+            
+            for i in range(len(nums)):
+                if not used[i]:
+                    # 1. Action: Choose the number
+                    used[i] = True
+                    current_path.append(nums[i])
+                    
+                    # 2. Recursion: Build the rest of the permutation
+                    backtrack(current_path)
+                    
+                    # 3. Backtrack: Undo the choice to try other options
+                    current_path.pop()
+                    used[i] = False
+        
+        backtrack([])
+        return res
